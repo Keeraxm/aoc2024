@@ -51,14 +51,12 @@ int part_two(vector<int> left, vector<int> right){
 }
 
 int main(){
-    string line;
-    string delimiter = "   ";
-    
-    vector<string> line_split;
     vector<int> left;
     vector<int> right;
     
-    int itr = 0;
+    vector<string> line_split;
+    string line;
+    string delimiter = "   ";
     
     ifstream f("1.txt");
     while(getline(f, line)){
