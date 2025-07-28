@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <map>
 using namespace std;
 
 vector<string> split(string s, string delimiter){
@@ -25,29 +26,26 @@ vector<string> split(string s, string delimiter){
 
 int part_one(vector<int> left, vector<int> right){
     int tot_dis = 0;
-    while(left.size() != 0){
-        vector<int>::iterator min_left = min_element(left.begin(), left.end());
-        vector<int>::iterator min_right = min_element(right.begin(), right.end());
+    
+    sort(left.begin(), left.end());
+    sort(right.begin(), right.end());
 
-        tot_dis += abs(*min_left - *min_right);
-
-        left.erase(left.begin() + distance(left.begin(), min_left));
-        right.erase(right.begin() + distance(right.begin(), min_right));
+    for(int i = 0; i < left.size(); i++){
+        tot_dis += abs(left[i] - right[i]);
     }
+
     return tot_dis;
 }
 
 int part_two(vector<int> left, vector<int> right){
     int tot = 0;
-    int count = 0;
-    for(auto i : left){
-        count = 0;
-        for(auto j : right){
-            if( i == j){
-                count++;
-            }
-        }
-        tot += i*count;
+    map<int, int> count;
+    
+    for(int i = 0; i < right.size(); i++){
+        count[right[i]]++;
+    }
+    for(int i = 0; i < left.size(); i++){
+        tot += left[i] * count[left[i]];
     }
     return tot;
 }
@@ -69,6 +67,7 @@ int main(){
         right.push_back(stoi(line_split[1]));
     }
     f.close();
+
     cout << part_one(left, right) << endl;
     cout << part_two(left, right);
     return 0;
