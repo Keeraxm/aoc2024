@@ -4,25 +4,8 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include "../Kersplit.h"
 using namespace std;
-
-vector<string> split(string s, string delimiter){
-    vector<string> tokens;
-    int left = 0, right = 0;
-    while(right < s.length()){
-        if(s.substr(right, delimiter.length()) == delimiter){
-            tokens.push_back(s.substr(left, right - left));
-            right += delimiter.length();
-            left = right;
-        }
-        else{
-            right++;
-        }
-    }
-    tokens.push_back(s.substr(left, right));
-
-    return tokens;
-}
 
 int part_one(vector<int> left, vector<int> right){
     int tot_dis = 0;
@@ -54,15 +37,16 @@ int main(){
     vector<int> left;
     vector<int> right;
     
-    vector<string> line_split;
+    vector<string> split_line;
     string line;
     string delimiter = "   ";
     
     ifstream f("1.txt");
     while(getline(f, line)){
-        line_split = split(line, delimiter);
-        left.push_back(stoi(line_split[0]));
-        right.push_back(stoi(line_split[1]));
+        split_line = ker_split_str(line, delimiter);
+        left.push_back(stoi(split_line[0]));
+        right.push_back(stoi(split_line[1]));
+        
     }
     f.close();
 
